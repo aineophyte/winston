@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main"/>
+	<classpathentry kind="src" path="src/generated"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-stub/1.54.1/6f2267abcdf55223a315b1df8348c94820ba3d7a/grpc-stub-1.54.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/org.apache.tomcat/annotations-api/6.0.53/94cfa8a6ebc6b36e966bff433d4eeebf933f3f41/annotations-api-6.0.53.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java-util/3.21.7/b379ede46ca813491f8588d1ab981cbf627e7dcc/protobuf-java-util-3.21.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-protobuf/1.54.1/3af888f22f0242a4b1272954166173f96db47a79/grpc-protobuf-1.54.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/31.1-jre/60458f877d055d0c9114d9e1a2efb737b4bc282c/guava-31.1-jre.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-context/1.54.1/7225b68b8f61cb68014b85cacd4365e657e80b5b/grpc-context-1.54.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/3.21.7/96cfc7147192f1de72c3d7d06972155ffb7d180c/protobuf-java-3.21.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-api/1.54.1/246ee0cafff9104aba6edd5c4423d4a43216c620/grpc-api-1.54.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-netty-shaded/1.54.1/fadabf30cbdb0eb2cb0bfd8c4f33dd89cc410857/grpc-netty-shaded-1.54.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-core/1.54.1/55370c1ab902c6700f8088eb82873a77478698f1/grpc-core-1.54.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-protobuf-lite/1.54.1/865388468541fc52f1375f93a89864272e335cb3/grpc-protobuf-lite-1.54.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/io.perfmark/perfmark-api/0.25.0/340a0c3d81cdcd9ecd7dc2ae00fb2633b469b157/perfmark-api-0.25.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/.gradle/caches/modules-2/files-2.1/com.google.guava/failureaccess/1.0.1/1dcf1de382a0bf95a3d8b0849546c88bac1292c9/failureaccess-1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/cassandra-driver-core-3.11.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/netty-common-4.1.77.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/netty-transport-4.1.77.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/metrics-core-3.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/netty-resolver-4.1.77.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/netty-buffer-4.1.77.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/netty-codec-4.1.77.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/netty-handler-4.1.77.Final.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

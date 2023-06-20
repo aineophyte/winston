@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.aineophyte.connectfour";
+option java_outer_classname = "ConnectFourProto";
+option objc_class_prefix = "CF";
+
+package connectfour;
+
+// Interface exported by the server.
+service ConnectFour {
+  //
+  // Start a game, the returned game information
+  // will contain the game id.
+  //
+  rpc StartGame(GameInfo) returns (GameInfo) {}
+  //
+  // Get the current state of the game board.
+  //
+  rpc GetBoard(GameInfo) returns (GameBoard) {}
+  //
+  // Execute a turn in the game.
+  //
+  rpc ExecuteTurn(TurnInfo) returns (TurnResult) {}
+}
+
+enum TurnStatus {
+  VALID = 0;
+  INVALID = 1;
+  SLOT_OCCUPIED = 2;
+  OUT_OF_TURN = 3;
+  WINNER = 4;
+}
+ 
+// The game board is an N x M array of emtpy slots
+// or game pieces.  Normal size is 7 x 6
+message GameBoard {
+  repeated GameSlot slots = 1;
+}
+
+// Information about a player
+message PlayerInfo {
+  string name = 1;
+  bool auto_play = 2;
+}
+
+// The game info contains the game id and ...
+message GameInfo {
+  optional string game_id = 1;
+  optional PlayerInfo player1 = 2;
+  optional PlayerInfo player2 = 3;
+}
+
+message GameSlot {
+  int32 x_coord = 1;
+  int32 y_coord = 2;
+  optional GamePiece piece = 3;
+}
+
+message GamePiece {
+  bool player2 = 1;
+} 
+ 
+message TurnInfo {
+  string game_id = 1;
+  int32 x_coord = 2;
+  bool player2 = 3;
+}
+
+message TurnResult {
+  TurnStatus status = 1;
+}

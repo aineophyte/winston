@@ -1,0 +1,1 @@
+protoc --plugin=protoc-gen-grpc-java=C:\Users\krasr\Documents\Research\protoc-23.1-win64\bin\protoc-gen-grpc-java.exe --grpc-java_out=src\generated --proto_path=src\main\proto connect_four.proto

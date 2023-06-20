@@ -1,0 +1,37 @@
+Project Idea
+
+Connect Four AI game that uses Mini/Max Alpha Beta.
+
+Some for the idea goes to MIT professor and AI pioneer Patrick Winston.  One of the lab assignments from MIT Open Courseware's
+6.034 Artificial Intelligence class offered in the fall of 2010, https://ocw.mit.edu/courses/6-034-artificial-intelligence-fall-2010,
+was 'Game Search'.  It was some working python code that allowed a user to play Connect Four against the program that used mini/max depth
+first search to a depth of 4.  The assignment was to implememt a better static evaluation function than the supplied default one to score
+the game boards used by the mini/max alpha beta algorithm.  I never really attempted to do anything with this one other than get the Python 2.x
+code working in Python 3.x.  I really haven't spent any time looking at the details of the Python code since my intent is to do something from
+scratch.
+
+The other goal of the project is to implement it with some modern technologies.
+
+UI: possibly React JS
+
+Backend: gRPC with Java, Cassandra data store, maybe eventually use Kubernetes to kick off the services.
+
+
+gRPC services
+
+StartGame (option for letting AI make the move for either or both players)
+
+GetBoard
+
+ExecuteTurn
+
+GetGameList
+
+
+Optional:
+
+Possibly keep a player archive too instead of just entered names for each new game.
+
+More than Mini/Max Alpha Beta where board sequences are saved for each completed game to use in a hybrid algorithm or maybe the historical
+board sequences can be used by the scoring algorithm.
+

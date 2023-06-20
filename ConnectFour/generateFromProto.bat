@@ -1,0 +1,1 @@
+protoc --java_out=src\generated --proto_path=src\main\proto connect_four.proto
