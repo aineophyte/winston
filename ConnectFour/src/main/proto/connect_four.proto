@@ -22,6 +22,10 @@ service ConnectFour {
   // Execute a turn in the game.
   //
   rpc ExecuteTurn(TurnInfo) returns (TurnResult) {}
+  //
+  // Delete all the info related to a game.
+  //
+  rpc DeleteGame(GameInfo) returns (DeleteResult) {}
 }
 
 enum TurnStatus {
@@ -69,4 +73,8 @@ message TurnInfo {
 
 message TurnResult {
   TurnStatus status = 1;
+}
+
+message DeleteResult {
+  string game_id = 1;
 }

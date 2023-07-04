@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src/main"/>
 	<classpathentry kind="src" path="src/generated"/>
+	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -29,5 +30,9 @@
 	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/netty-buffer-4.1.77.Final.jar"/>
 	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/netty-codec-4.1.77.Final.jar"/>
 	<classpathentry kind="lib" path="C:/Users/krasr/Documents/Research/cassandra-java-driver-3.11.3/lib/netty-handler-4.1.77.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Log4j/apache-log4j-2.17.1-bin/log4j-core-2.17.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Log4j/apache-log4j-2.17.1-bin/log4j-slf4j-impl-2.17.1.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Log4j/apache-log4j-2.17.1-bin/log4j-api-2.17.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

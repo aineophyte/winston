@@ -49,6 +49,11 @@ public final class ConnectFourProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_connectfour_TurnResult_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_connectfour_DeleteResult_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_connectfour_DeleteResult_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -71,16 +76,18 @@ public final class ConnectFourProto {
       "GamePiece\022\017\n\007player2\030\001 \001(\010\"=\n\010TurnInfo\022\017" +
       "\n\007game_id\030\001 \001(\t\022\017\n\007x_coord\030\002 \001(\005\022\017\n\007play" +
       "er2\030\003 \001(\010\"5\n\nTurnResult\022\'\n\006status\030\001 \001(\0162" +
-      "\027.connectfour.TurnStatus*T\n\nTurnStatus\022\t" +
-      "\n\005VALID\020\000\022\013\n\007INVALID\020\001\022\021\n\rSLOT_OCCUPIED\020" +
-      "\002\022\017\n\013OUT_OF_TURN\020\003\022\n\n\006WINNER\020\0042\310\001\n\013Conne" +
-      "ctFour\022;\n\tStartGame\022\025.connectfour.GameIn" +
-      "fo\032\025.connectfour.GameInfo\"\000\022;\n\010GetBoard\022" +
-      "\025.connectfour.GameInfo\032\026.connectfour.Gam" +
-      "eBoard\"\000\022?\n\013ExecuteTurn\022\025.connectfour.Tu" +
-      "rnInfo\032\027.connectfour.TurnResult\"\000B5\n\032com" +
-      ".aineophyte.connectfourB\020ConnectFourProt" +
-      "oP\001\242\002\002CFb\006proto3"
+      "\027.connectfour.TurnStatus\"\037\n\014DeleteResult" +
+      "\022\017\n\007game_id\030\001 \001(\t*T\n\nTurnStatus\022\t\n\005VALID" +
+      "\020\000\022\013\n\007INVALID\020\001\022\021\n\rSLOT_OCCUPIED\020\002\022\017\n\013OU" +
+      "T_OF_TURN\020\003\022\n\n\006WINNER\020\0042\212\002\n\013ConnectFour\022" +
+      ";\n\tStartGame\022\025.connectfour.GameInfo\032\025.co" +
+      "nnectfour.GameInfo\"\000\022;\n\010GetBoard\022\025.conne" +
+      "ctfour.GameInfo\032\026.connectfour.GameBoard\"" +
+      "\000\022?\n\013ExecuteTurn\022\025.connectfour.TurnInfo\032" +
+      "\027.connectfour.TurnResult\"\000\022@\n\nDeleteGame" +
+      "\022\025.connectfour.GameInfo\032\031.connectfour.De" +
+      "leteResult\"\000B5\n\032com.aineophyte.connectfo" +
+      "urB\020ConnectFourProtoP\001\242\002\002CFb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -128,6 +135,12 @@ public final class ConnectFourProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_connectfour_TurnResult_descriptor,
         new java.lang.String[] { "Status", });
+    internal_static_connectfour_DeleteResult_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_connectfour_DeleteResult_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_connectfour_DeleteResult_descriptor,
+        new java.lang.String[] { "GameId", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

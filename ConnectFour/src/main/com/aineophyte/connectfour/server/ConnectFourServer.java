@@ -4,17 +4,21 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.grpc.Grpc;
 import io.grpc.InsecureServerCredentials;
 import io.grpc.Server;
 import io.grpc.stub.StreamObserver;
 
 import com.aineophyte.connectfour.dao.DataAccessFactory;
+import com.aineophyte.connectfour.logic.MoveEvaluator;
+import com.aineophyte.connectfour.logic.MoveResult;
 import com.aineophyte.connectfour.ConnectFourGrpc;
+import com.aineophyte.connectfour.DeleteResult;
 import com.aineophyte.connectfour.GameBoard;
 import com.aineophyte.connectfour.GameInfo;
-import com.aineophyte.connectfour.GamePiece;
-import com.aineophyte.connectfour.GameSlot;
 import com.aineophyte.connectfour.PlayerInfo;
 import com.aineophyte.connectfour.TurnInfo;
 import com.aineophyte.connectfour.TurnResult;
@@ -47,6 +51,11 @@ public class ConnectFourServer
 		        } catch (InterruptedException e) {
 		            e.printStackTrace(System.err);
 		        }
+		        try {
+		        	DataAccessFactory.getDataAccess().close();
+		        } catch (Exception e) {
+		        	e.printStackTrace(System.err);
+		        }
 		        System.err.println("*** server shut down");
 	        }
 	    });
@@ -57,7 +66,7 @@ public class ConnectFourServer
 	{
 	    if (server != null) {
 	    	server.shutdown().awaitTermination(30, TimeUnit.SECONDS);
-	    }
+	    }   
 	}
 
 	/**
@@ -82,6 +91,8 @@ public class ConnectFourServer
 	
 	private static class ConnectFourService extends ConnectFourGrpc.ConnectFourImplBase
 	{
+		private static final Logger logger = LoggerFactory.getLogger(ConnectFourService.class);
+		
 		@Override
 		public void getBoard(GameInfo request, StreamObserver<GameBoard> responseObserver)
 		{
@@ -104,68 +115,94 @@ public class ConnectFourServer
 			responseObserver.onCompleted();
 		}
 		
+		@Override
+	    public void deleteGame(GameInfo request, StreamObserver<DeleteResult> responseObserver)
+		{
+			UUID gameId = UUID.fromString(request.getGameId());
+			responseObserver.onNext(delete(gameId));
+			responseObserver.onCompleted();
+		}
+		
 		private GameBoard fetchBoard(UUID gameId)
 		{
-			return DataAccessFactory.getDataAccess().fetchBoard(gameId);
+		    if (logger.isDebugEnabled()) {
+		    	logger.debug("start fetchBoard for game: " + gameId);
+		    }
+			try {
+				return DataAccessFactory.getDataAccess().fetchBoard(gameId);				
+			} finally {
+				if (logger.isDebugEnabled()) {
+					logger.debug("end fetchBoard for game: " + gameId);					
+				}
+			}
 		}
 		
 		private GameInfo initiateGame(GameInfo request)
 		{
-			PlayerInfo player1 = request.getPlayer1();
-			PlayerInfo player2 = request.getPlayer2();
-			// need to validate the players
-			UUID gameId = UUID.randomUUID();
-			
-			DataAccessFactory.getDataAccess().insertNewGame(gameId, player1, player2);
-			
-			GameInfo info = GameInfo.newBuilder().setPlayer1(player1).setPlayer2(player2).setGameId(gameId.toString()).build();
-			return info;
+		    if (logger.isDebugEnabled()) {
+		    	logger.debug("start initiateGame");
+		    }
+
+		    try {
+				PlayerInfo player1 = request.getPlayer1();
+				PlayerInfo player2 = request.getPlayer2();
+				// need to validate the players
+				UUID gameId = UUID.randomUUID();
+				
+				DataAccessFactory.getDataAccess().insertNewGame(gameId, player1, player2);
+				
+				GameInfo info = GameInfo.newBuilder().setPlayer1(player1).setPlayer2(player2).setGameId(gameId.toString()).build();
+				return info;		    	
+		    } finally {
+			    if (logger.isDebugEnabled()) {
+			    	logger.debug("end initiateGame");
+			    }		    	
+		    }
 		}
 		
 		private TurnResult nextTurn(TurnInfo request)
 		{
-			TurnStatus status;
-			
-			int xCoord = request.getXCoord();
-			
-			if ((xCoord < 1) || (xCoord > 7)) {
-				status = TurnStatus.INVALID;
-			} else {
-				UUID gameId = UUID.fromString(request.getGameId());
-				GameBoard board = fetchBoard(gameId);
-				if (isWrongTurn(board.getSlotsCount(), request.getPlayer2())) {
-					status = TurnStatus.OUT_OF_TURN;
-				} else {
-					// Count number of game pieces already in the column and see
-					// if there is space for this one
-					int piecesCount = 0;
-					for (GameSlot slot : board.getSlotsList()) {
-						if (slot.getXCoord() == xCoord) {
-							piecesCount++;
-						}
-					}
+		    if (logger.isDebugEnabled()) {
+		    	logger.debug("start nextTurn for game: " + request.getGameId());
+		    }
+		    
+		    try {
+		    	MoveEvaluator evaluator = new MoveEvaluator(request.getXCoord(), request.getPlayer2());
+		    	TurnStatus status = evaluator.preCheck();
+		    	
+		    	if (status == TurnStatus.UNRECOGNIZED) {
+					UUID gameId = UUID.fromString(request.getGameId());
+					GameBoard board = fetchBoard(gameId);
 					
-					if (piecesCount == 6) {
-						status = TurnStatus.SLOT_OCCUPIED;
-					} else {
-						// TODO determine is winner instead of valid
-						GamePiece piece = GamePiece.newBuilder().setPlayer2(request.getPlayer2()).build();
-						GameSlot slot = GameSlot.newBuilder().setXCoord(xCoord).setYCoord(piecesCount + 1)
-								.setPiece(piece).build();
-						DataAccessFactory.getDataAccess().insertGamePiece(gameId, slot);
-						status = TurnStatus.VALID;
-					}
-				}
-			}
-			
-			return TurnResult.newBuilder().setStatus(status).build();
+					MoveResult result = evaluator.evaluate(board);
+					status = result.getStatus();
+					if ((status == TurnStatus.VALID) || (status == TurnStatus.WINNER)) {
+						DataAccessFactory.getDataAccess().insertGamePiece(gameId, result.getSlot());					
+					}		    		
+		    	}
+				
+				return TurnResult.newBuilder().setStatus(status).build();
+		    	
+		    } finally {
+			    if (logger.isDebugEnabled()) {
+			    	logger.debug("end nextTurn for game: " + request.getGameId());
+			    }		    	
+		    }
 		}
 		
-		private boolean isWrongTurn(int numberOfTurns, boolean isPlayer2)
+		private DeleteResult delete(UUID gameId)
 		{
-			boolean odd = ((numberOfTurns % 2) == 1);
-			
-			return (odd && !isPlayer2) || (!odd && isPlayer2);
+		    if (logger.isDebugEnabled()) {
+		    	logger.debug("start delete for game: " + gameId);
+		    }
+			try {
+				DataAccessFactory.getDataAccess().delete(gameId);
+				return DeleteResult.newBuilder().setGameId(gameId.toString()).build();
+			} finally {
+				if (logger.isDebugEnabled()) {
+					logger.debug("end delete for game: " + gameId);					
+				}
+			}
 		}
 	}
 }

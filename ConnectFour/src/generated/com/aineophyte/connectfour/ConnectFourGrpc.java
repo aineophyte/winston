@@ -111,6 +111,37 @@ public final class ConnectFourGrpc {
     return getExecuteTurnMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.aineophyte.connectfour.GameInfo,
+      com.aineophyte.connectfour.DeleteResult> getDeleteGameMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "DeleteGame",
+      requestType = com.aineophyte.connectfour.GameInfo.class,
+      responseType = com.aineophyte.connectfour.DeleteResult.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.aineophyte.connectfour.GameInfo,
+      com.aineophyte.connectfour.DeleteResult> getDeleteGameMethod() {
+    io.grpc.MethodDescriptor<com.aineophyte.connectfour.GameInfo, com.aineophyte.connectfour.DeleteResult> getDeleteGameMethod;
+    if ((getDeleteGameMethod = ConnectFourGrpc.getDeleteGameMethod) == null) {
+      synchronized (ConnectFourGrpc.class) {
+        if ((getDeleteGameMethod = ConnectFourGrpc.getDeleteGameMethod) == null) {
+          ConnectFourGrpc.getDeleteGameMethod = getDeleteGameMethod =
+              io.grpc.MethodDescriptor.<com.aineophyte.connectfour.GameInfo, com.aineophyte.connectfour.DeleteResult>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "DeleteGame"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.aineophyte.connectfour.GameInfo.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.aineophyte.connectfour.DeleteResult.getDefaultInstance()))
+              .setSchemaDescriptor(new ConnectFourMethodDescriptorSupplier("DeleteGame"))
+              .build();
+        }
+      }
+    }
+    return getDeleteGameMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -192,6 +223,16 @@ public final class ConnectFourGrpc {
         io.grpc.stub.StreamObserver<com.aineophyte.connectfour.TurnResult> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getExecuteTurnMethod(), responseObserver);
     }
+
+    /**
+     * <pre>
+     * Delete all the info related to a game.
+     * </pre>
+     */
+    default void deleteGame(com.aineophyte.connectfour.GameInfo request,
+        io.grpc.stub.StreamObserver<com.aineophyte.connectfour.DeleteResult> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteGameMethod(), responseObserver);
+    }
   }
 
   /**
@@ -260,6 +301,17 @@ public final class ConnectFourGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getExecuteTurnMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     * Delete all the info related to a game.
+     * </pre>
+     */
+    public void deleteGame(com.aineophyte.connectfour.GameInfo request,
+        io.grpc.stub.StreamObserver<com.aineophyte.connectfour.DeleteResult> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getDeleteGameMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -310,6 +362,16 @@ public final class ConnectFourGrpc {
     public com.aineophyte.connectfour.TurnResult executeTurn(com.aineophyte.connectfour.TurnInfo request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getExecuteTurnMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * Delete all the info related to a game.
+     * </pre>
+     */
+    public com.aineophyte.connectfour.DeleteResult deleteGame(com.aineophyte.connectfour.GameInfo request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getDeleteGameMethod(), getCallOptions(), request);
     }
   }
 
@@ -365,11 +427,23 @@ public final class ConnectFourGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getExecuteTurnMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * Delete all the info related to a game.
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.aineophyte.connectfour.DeleteResult> deleteGame(
+        com.aineophyte.connectfour.GameInfo request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getDeleteGameMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_START_GAME = 0;
   private static final int METHODID_GET_BOARD = 1;
   private static final int METHODID_EXECUTE_TURN = 2;
+  private static final int METHODID_DELETE_GAME = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -399,6 +473,10 @@ public final class ConnectFourGrpc {
         case METHODID_EXECUTE_TURN:
           serviceImpl.executeTurn((com.aineophyte.connectfour.TurnInfo) request,
               (io.grpc.stub.StreamObserver<com.aineophyte.connectfour.TurnResult>) responseObserver);
+          break;
+        case METHODID_DELETE_GAME:
+          serviceImpl.deleteGame((com.aineophyte.connectfour.GameInfo) request,
+              (io.grpc.stub.StreamObserver<com.aineophyte.connectfour.DeleteResult>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -439,6 +517,13 @@ public final class ConnectFourGrpc {
               com.aineophyte.connectfour.TurnInfo,
               com.aineophyte.connectfour.TurnResult>(
                 service, METHODID_EXECUTE_TURN)))
+        .addMethod(
+          getDeleteGameMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.aineophyte.connectfour.GameInfo,
+              com.aineophyte.connectfour.DeleteResult>(
+                service, METHODID_DELETE_GAME)))
         .build();
   }
 
@@ -490,6 +575,7 @@ public final class ConnectFourGrpc {
               .addMethod(getStartGameMethod())
               .addMethod(getGetBoardMethod())
               .addMethod(getExecuteTurnMethod())
+              .addMethod(getDeleteGameMethod())
               .build();
         }
       }
