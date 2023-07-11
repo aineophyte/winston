@@ -13,13 +13,28 @@ public class MoveEvaluator
 	private static final Logger logger = LoggerFactory.getLogger(MoveEvaluator.class);
 	
 	private final Boolean[][] boardGrid = new Boolean[7][6];
-	private final int xCoord;
+	private final GameBoard board;
+	private int xCoord;
 	private int yCoord = 0;
-	private final boolean player2;
+	private boolean player2;
 	
-	public MoveEvaluator(int xCoord, boolean player2)
+	public MoveEvaluator(GameBoard board, int xCoord, boolean player2)
+	{
+		this.board = board;
+		this.xCoord = xCoord;
+		this.player2 = player2;
+		for (GameSlot slot : board.getSlotsList()) {			
+			boardGrid[slot.getXCoord() - 1][slot.getYCoord() - 1] = slot.getPiece().getPlayer2();
+		}
+	}
+	
+	public void setXCoord(int xCoord)
 	{
 		this.xCoord = xCoord;
+	}
+	
+	public void setPlayer2(boolean player2)
+	{
 		this.player2 = player2;
 	}
 	
@@ -34,48 +49,39 @@ public class MoveEvaluator
 		return TurnStatus.UNRECOGNIZED;
 	}
 		
-	public MoveResult evaluate(GameBoard board)
+	public MoveResult evaluate()
 	{
         TurnStatus status;
         GameSlot moveSlot = null;
+        yCoord = 0;
 
-		if (isWrongTurn(board.getSlotsCount())) {
-			status = TurnStatus.OUT_OF_TURN;
-		} else {
-			// Count number of game pieces already in the column and see
-			// if there is space for this one
-			for (GameSlot slot : board.getSlotsList()) {
-				if (slot.getXCoord() == xCoord) {
-					yCoord++;
-				}
-				
-				boardGrid[slot.getXCoord() - 1][slot.getYCoord() - 1] = slot.getPiece().getPlayer2();
-			}
-			
-			if (yCoord == 6) {
-				status = TurnStatus.SLOT_OCCUPIED;
-			} else {
+        int moveCount = board.getSlotsCount();
+        
+		for (GameSlot slot : board.getSlotsList()) {
+			if (slot.getXCoord() == xCoord) {
 				yCoord++;
-				if (isRowWinner() || isColumnWinner() ||
-						isDiagonalWinnerUp() || isDiagonalWinnerDown()) {
-					status = TurnStatus.WINNER;
-				} else {
-					status = TurnStatus.VALID;
-				}
-				GamePiece piece = GamePiece.newBuilder().setPlayer2(player2).build();
-				moveSlot = GameSlot.newBuilder().setXCoord(xCoord).setYCoord(yCoord)
-						.setPiece(piece).build();				
 			}
 		}
 		
-		return new MoveResult(status, moveSlot);		
-	}
-	
-	private boolean isWrongTurn(int numberOfTurns)
-	{
-		boolean odd = ((numberOfTurns % 2) == 1);
+		if (yCoord == 6) {
+			status = TurnStatus.SLOT_OCCUPIED;
+		} else {
+			yCoord++;
+			int moveNumber = moveCount + 1;
+			if (isRowWinner() || isColumnWinner() ||
+					isDiagonalWinnerUp() || isDiagonalWinnerDown()) {
+				status = TurnStatus.WINNER;
+			} else if (moveNumber == 42) {
+				status = TurnStatus.DRAW;
+			} else {
+				status = TurnStatus.VALID;
+			}
+			GamePiece piece = GamePiece.newBuilder().setPlayer2(player2).setMoveNumber(moveNumber).build();
+			moveSlot = GameSlot.newBuilder().setXCoord(xCoord).setYCoord(yCoord)
+					.setPiece(piece).build();				
+		}
 		
-		return (odd && !player2) || (!odd && player2);
+		return new MoveResult(status, moveSlot);		
 	}
 	
 	private boolean isRowWinner()
@@ -210,5 +216,10 @@ public class MoveEvaluator
 		}
 		
 		return winner;
+	}
+	
+	public Boolean[][] getBoardGrid()
+	{
+		return boardGrid;
 	}
 }

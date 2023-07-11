@@ -15,14 +15,18 @@ import io.grpc.stub.StreamObserver;
 import com.aineophyte.connectfour.dao.DataAccessFactory;
 import com.aineophyte.connectfour.logic.MoveEvaluator;
 import com.aineophyte.connectfour.logic.MoveResult;
+import com.aineophyte.connectfour.logic.TurnOrderCheck;
+import com.aineophyte.connectfour.logic.autoplay.PlayStrategyFactory;
 import com.aineophyte.connectfour.ConnectFourGrpc;
 import com.aineophyte.connectfour.DeleteResult;
 import com.aineophyte.connectfour.GameBoard;
 import com.aineophyte.connectfour.GameInfo;
+import com.aineophyte.connectfour.GameSlot;
 import com.aineophyte.connectfour.PlayerInfo;
 import com.aineophyte.connectfour.TurnInfo;
 import com.aineophyte.connectfour.TurnResult;
 import com.aineophyte.connectfour.TurnStatus;
+import com.aineophyte.connectfour.api.ConnectFourPlayStrategy;
 
 public class ConnectFourServer
 {
@@ -146,7 +150,8 @@ public class ConnectFourServer
 		    try {
 				PlayerInfo player1 = request.getPlayer1();
 				PlayerInfo player2 = request.getPlayer2();
-				// need to validate the players
+				// need to validate the players including the auto mode
+				// strategies
 				UUID gameId = UUID.randomUUID();
 				
 				DataAccessFactory.getDataAccess().insertNewGame(gameId, player1, player2);
@@ -167,17 +172,38 @@ public class ConnectFourServer
 		    }
 		    
 		    try {
-		    	MoveEvaluator evaluator = new MoveEvaluator(request.getXCoord(), request.getPlayer2());
-		    	TurnStatus status = evaluator.preCheck();
+		    	 
+		    	UUID gameId = UUID.fromString(request.getGameId());
 		    	
-		    	if (status == TurnStatus.UNRECOGNIZED) {
-					UUID gameId = UUID.fromString(request.getGameId());
-					GameBoard board = fetchBoard(gameId);
-					
-					MoveResult result = evaluator.evaluate(board);
+		    	// need the board info to see if the turn info makes sense
+		    	GameBoard board = fetchBoard(gameId);
+		    	
+		    	TurnStatus status = new TurnOrderCheck().verify(board, request.getPlayer2());
+		    	
+		    	if (status == TurnStatus.OUT_OF_TURN) {
+		    		return TurnResult.newBuilder().setStatus(status).build();
+		    	}
+		    	
+		    	// need the game info to see if anyone is auto play
+		    	GameInfo gameInfo = DataAccessFactory.getDataAccess().fetchGameInfo(gameId);
+		    	
+		    	String playerMode = request.getPlayer2() ? gameInfo.getPlayer2().getMode() :
+		    		gameInfo.getPlayer1().getMode();
+		    	
+		    	ConnectFourPlayStrategy playerStrategy = PlayStrategyFactory.get(playerMode);
+		    	
+		    	int xCoord = (playerStrategy == null) ? request.getXCoord() : playerStrategy.getSlot(board);
+		    					    	
+		    	MoveEvaluator evaluator = new MoveEvaluator(board, xCoord, request.getPlayer2());
+		    	status = evaluator.preCheck();
+		    	
+		    	if (status == TurnStatus.UNRECOGNIZED) {					
+					MoveResult result = evaluator.evaluate();
 					status = result.getStatus();
-					if ((status == TurnStatus.VALID) || (status == TurnStatus.WINNER)) {
-						DataAccessFactory.getDataAccess().insertGamePiece(gameId, result.getSlot());					
+					if ((status == TurnStatus.VALID) || (status == TurnStatus.WINNER) || (status == TurnStatus.DRAW)) {
+						GameSlot slot = result.getSlot();
+						DataAccessFactory.getDataAccess().insertGamePiece(gameId, slot);
+						return TurnResult.newBuilder().setStatus(status).setMoveNumber(slot.getPiece().getMoveNumber()).build();
 					}		    		
 		    	}
 				

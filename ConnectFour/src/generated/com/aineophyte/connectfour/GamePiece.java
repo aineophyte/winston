@@ -49,6 +49,17 @@ private static final long serialVersionUID = 0L;
     return player2_;
   }
 
+  public static final int MOVE_NUMBER_FIELD_NUMBER = 2;
+  private int moveNumber_ = 0;
+  /**
+   * <code>int32 move_number = 2;</code>
+   * @return The moveNumber.
+   */
+  @java.lang.Override
+  public int getMoveNumber() {
+    return moveNumber_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -66,6 +77,9 @@ private static final long serialVersionUID = 0L;
     if (player2_ != false) {
       output.writeBool(1, player2_);
     }
+    if (moveNumber_ != 0) {
+      output.writeInt32(2, moveNumber_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -78,6 +92,10 @@ private static final long serialVersionUID = 0L;
     if (player2_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(1, player2_);
+    }
+    if (moveNumber_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, moveNumber_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -96,6 +114,8 @@ private static final long serialVersionUID = 0L;
 
     if (getPlayer2()
         != other.getPlayer2()) return false;
+    if (getMoveNumber()
+        != other.getMoveNumber()) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -110,6 +130,8 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + PLAYER2_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getPlayer2());
+    hash = (37 * hash) + MOVE_NUMBER_FIELD_NUMBER;
+    hash = (53 * hash) + getMoveNumber();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -242,6 +264,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       bitField0_ = 0;
       player2_ = false;
+      moveNumber_ = 0;
       return this;
     }
 
@@ -278,6 +301,9 @@ private static final long serialVersionUID = 0L;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.player2_ = player2_;
       }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.moveNumber_ = moveNumber_;
+      }
     }
 
     @java.lang.Override
@@ -294,6 +320,9 @@ private static final long serialVersionUID = 0L;
       if (other == com.aineophyte.connectfour.GamePiece.getDefaultInstance()) return this;
       if (other.getPlayer2() != false) {
         setPlayer2(other.getPlayer2());
+      }
+      if (other.getMoveNumber() != 0) {
+        setMoveNumber(other.getMoveNumber());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -326,6 +355,11 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000001;
               break;
             } // case 8
+            case 16: {
+              moveNumber_ = input.readInt32();
+              bitField0_ |= 0x00000002;
+              break;
+            } // case 16
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -371,6 +405,38 @@ private static final long serialVersionUID = 0L;
     public Builder clearPlayer2() {
       bitField0_ = (bitField0_ & ~0x00000001);
       player2_ = false;
+      onChanged();
+      return this;
+    }
+
+    private int moveNumber_ ;
+    /**
+     * <code>int32 move_number = 2;</code>
+     * @return The moveNumber.
+     */
+    @java.lang.Override
+    public int getMoveNumber() {
+      return moveNumber_;
+    }
+    /**
+     * <code>int32 move_number = 2;</code>
+     * @param value The moveNumber to set.
+     * @return This builder for chaining.
+     */
+    public Builder setMoveNumber(int value) {
+
+      moveNumber_ = value;
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 move_number = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearMoveNumber() {
+      bitField0_ = (bitField0_ & ~0x00000002);
+      moveNumber_ = 0;
       onChanged();
       return this;
     }

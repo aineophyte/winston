@@ -28,6 +28,10 @@ public enum TurnStatus
    * <code>WINNER = 4;</code>
    */
   WINNER(4),
+  /**
+   * <code>DRAW = 5;</code>
+   */
+  DRAW(5),
   UNRECOGNIZED(-1),
   ;
 
@@ -51,6 +55,10 @@ public enum TurnStatus
    * <code>WINNER = 4;</code>
    */
   public static final int WINNER_VALUE = 4;
+  /**
+   * <code>DRAW = 5;</code>
+   */
+  public static final int DRAW_VALUE = 5;
 
 
   public final int getNumber() {
@@ -82,6 +90,7 @@ public enum TurnStatus
       case 2: return SLOT_OCCUPIED;
       case 3: return OUT_OF_TURN;
       case 4: return WINNER;
+      case 5: return DRAW;
       default: return null;
     }
   }

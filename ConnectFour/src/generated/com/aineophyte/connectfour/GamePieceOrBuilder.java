@@ -12,4 +12,10 @@ public interface GamePieceOrBuilder extends
    * @return The player2.
    */
   boolean getPlayer2();
+
+  /**
+   * <code>int32 move_number = 2;</code>
+   * @return The moveNumber.
+   */
+  int getMoveNumber();
 }

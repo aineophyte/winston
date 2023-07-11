@@ -34,7 +34,8 @@ enum TurnStatus {
   SLOT_OCCUPIED = 2;
   OUT_OF_TURN = 3;
   WINNER = 4;
-}
+  DRAW = 5;
+}  
  
 // The game board is an N x M array of emtpy slots
 // or game pieces.  Normal size is 7 x 6
@@ -45,7 +46,7 @@ message GameBoard {
 // Information about a player
 message PlayerInfo {
   string name = 1;
-  bool auto_play = 2;
+  string mode = 2;
 }
 
 // The game info contains the game id and ...
@@ -63,6 +64,7 @@ message GameSlot {
 
 message GamePiece {
   bool player2 = 1;
+  int32 move_number = 2;
 } 
  
 message TurnInfo {
@@ -73,6 +75,7 @@ message TurnInfo {
 
 message TurnResult {
   TurnStatus status = 1;
+  optional int32 move_number = 2;
 }
 
 message DeleteResult {

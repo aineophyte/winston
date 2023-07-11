@@ -15,6 +15,7 @@ import com.aineophyte.connectfour.GamePiece;
 import com.aineophyte.connectfour.GameSlot;
 import com.aineophyte.connectfour.PlayerInfo;
 import com.aineophyte.connectfour.GameBoard.Builder;
+import com.aineophyte.connectfour.GameInfo;
 
 public class CassandraDataAccess implements DataAccess
 {
@@ -23,22 +24,26 @@ public class CassandraDataAccess implements DataAccess
 	private static final int DB_PORT = 9042;
 	
 	private static final String INSERT_NEW_GAME =
-			"insert into connectfour.game_info (game_id, player_one_name, player_one_auto, player_two_name, player_two_auto, create_time) " + 
+			"insert into connectfour.game_info (game_id, player_one_name, player_one_mode, player_two_name, player_two_mode, create_time) " + 
 	        "values (?, ?, ?, ?, ?, ?)";
 	
 	private static final String GET_GAME_BOARD =
-			"select slot_dimension_x, slot_dimension_y, player_two from connectfour.board_info " +
+			"select slot_dimension_x, slot_dimension_y, player_two, move_number from connectfour.board_info " +
 	        "where game_id = ?";
 	
 	private static final String INSERT_GAME_PIECE =
-			"insert into connectfour.board_info (game_id, slot_dimension_x, slot_dimension_y, player_two) " + 
-	        "values (?, ?, ?, ?)";
+			"insert into connectfour.board_info (game_id, slot_dimension_x, slot_dimension_y, player_two, move_number) " + 
+	        "values (?, ?, ?, ?, ?)";
 	
 	private static final String DELETE_BOARD =
 			"delete from connectfour.board_info where game_id = ?";
 	
 	private static final String DELETE_GAME =
 			"delete from connectfour.game_info where game_id = ?";
+	
+	private static final String GET_GAME_INFO =
+			"select player_one_mode, player_two_mode from connectfour.game_info " +
+	        "where game_id = ?";
 	
 	private static class Instance
 	{
@@ -52,6 +57,7 @@ public class CassandraDataAccess implements DataAccess
 	private final PreparedStatement insertGamePieceStatement;
 	private final PreparedStatement deleteBoardStatement;
 	private final PreparedStatement deleteGameStatement;
+	private final PreparedStatement getGameInfoStatement;
 	
 	private CassandraDataAccess()
 	{
@@ -62,6 +68,7 @@ public class CassandraDataAccess implements DataAccess
 		this.insertGamePieceStatement = session.prepare(INSERT_GAME_PIECE);
 		this.deleteBoardStatement = session.prepare(DELETE_BOARD);
 		this.deleteGameStatement = session.prepare(DELETE_GAME);
+		this.getGameInfoStatement = session.prepare(GET_GAME_INFO);
 	}
 	
 	public static CassandraDataAccess getInstance()
@@ -73,7 +80,7 @@ public class CassandraDataAccess implements DataAccess
 	public void insertNewGame(UUID gameId, PlayerInfo player1, PlayerInfo player2)
 	{		
 	    Date now = new Date(System.currentTimeMillis());
-	    BoundStatement bound = insertNewGameStatement.bind(gameId, player1.getName(), player1.getAutoPlay(), player2.getName(), player2.getAutoPlay(), now);
+	    BoundStatement bound = insertNewGameStatement.bind(gameId, player1.getName(), player1.getMode(), player2.getName(), player2.getMode(), now);
 	    session.execute(bound);
 	}
 
@@ -85,7 +92,7 @@ public class CassandraDataAccess implements DataAccess
 		
 		Builder builder = GameBoard.newBuilder();
 		for (Row rowN : rs) {
-		    GamePiece piece = GamePiece.newBuilder().setPlayer2(rowN.getBool(2)).build();
+		    GamePiece piece = GamePiece.newBuilder().setPlayer2(rowN.getBool(2)).setMoveNumber(rowN.getInt(3)).build();
 		    GameSlot slot = GameSlot.newBuilder().setXCoord(rowN.getInt(0)).setYCoord(rowN.getInt(1)).setPiece(piece).build();
 		    builder.addSlots(slot);
 		}
@@ -96,7 +103,7 @@ public class CassandraDataAccess implements DataAccess
 	@Override
 	public void insertGamePiece(UUID gameId, GameSlot slot)
 	{
-	    BoundStatement bound = insertGamePieceStatement.bind(gameId, slot.getXCoord(), slot.getYCoord(), slot.getPiece().getPlayer2());
+	    BoundStatement bound = insertGamePieceStatement.bind(gameId, slot.getXCoord(), slot.getYCoord(), slot.getPiece().getPlayer2(), slot.getPiece().getMoveNumber());
 	    session.execute(bound);
 	}
 	
@@ -110,6 +117,19 @@ public class CassandraDataAccess implements DataAccess
 	    batch.add(bound1);
 	    batch.add(bound2);
 	    session.execute(batch);
+	}
+	
+	@Override
+	public GameInfo fetchGameInfo(UUID gameId)
+	{
+		BoundStatement bound = getGameInfoStatement.bind(gameId);
+		ResultSet rs = session.execute(bound);
+		
+		Row row = rs.one();
+		PlayerInfo player1 = PlayerInfo.newBuilder().setMode(row.getString(0)).build();
+		PlayerInfo player2 = PlayerInfo.newBuilder().setMode(row.getString(1)).build();
+		
+		return GameInfo.newBuilder().setGameId(gameId.toString()).setPlayer1(player1).setPlayer2(player2).build();		
 	}
 
 	@Override

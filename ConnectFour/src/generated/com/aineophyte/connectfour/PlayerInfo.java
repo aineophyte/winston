@@ -21,6 +21,7 @@ private static final long serialVersionUID = 0L;
   }
   private PlayerInfo() {
     name_ = "";
+    mode_ = "";
   }
 
   @java.lang.Override
@@ -82,15 +83,43 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int AUTO_PLAY_FIELD_NUMBER = 2;
-  private boolean autoPlay_ = false;
+  public static final int MODE_FIELD_NUMBER = 2;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object mode_ = "";
   /**
-   * <code>bool auto_play = 2;</code>
-   * @return The autoPlay.
+   * <code>string mode = 2;</code>
+   * @return The mode.
    */
   @java.lang.Override
-  public boolean getAutoPlay() {
-    return autoPlay_;
+  public java.lang.String getMode() {
+    java.lang.Object ref = mode_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      mode_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string mode = 2;</code>
+   * @return The bytes for mode.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getModeBytes() {
+    java.lang.Object ref = mode_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      mode_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -110,8 +139,8 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
     }
-    if (autoPlay_ != false) {
-      output.writeBool(2, autoPlay_);
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mode_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, mode_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -125,9 +154,8 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(name_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
     }
-    if (autoPlay_ != false) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(2, autoPlay_);
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(mode_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, mode_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -146,8 +174,8 @@ private static final long serialVersionUID = 0L;
 
     if (!getName()
         .equals(other.getName())) return false;
-    if (getAutoPlay()
-        != other.getAutoPlay()) return false;
+    if (!getMode()
+        .equals(other.getMode())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -161,9 +189,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + NAME_FIELD_NUMBER;
     hash = (53 * hash) + getName().hashCode();
-    hash = (37 * hash) + AUTO_PLAY_FIELD_NUMBER;
-    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-        getAutoPlay());
+    hash = (37 * hash) + MODE_FIELD_NUMBER;
+    hash = (53 * hash) + getMode().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -300,7 +327,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       bitField0_ = 0;
       name_ = "";
-      autoPlay_ = false;
+      mode_ = "";
       return this;
     }
 
@@ -338,7 +365,7 @@ private static final long serialVersionUID = 0L;
         result.name_ = name_;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.autoPlay_ = autoPlay_;
+        result.mode_ = mode_;
       }
     }
 
@@ -359,8 +386,10 @@ private static final long serialVersionUID = 0L;
         bitField0_ |= 0x00000001;
         onChanged();
       }
-      if (other.getAutoPlay() != false) {
-        setAutoPlay(other.getAutoPlay());
+      if (!other.getMode().isEmpty()) {
+        mode_ = other.mode_;
+        bitField0_ |= 0x00000002;
+        onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -393,11 +422,11 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000001;
               break;
             } // case 10
-            case 16: {
-              autoPlay_ = input.readBool();
+            case 18: {
+              mode_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000002;
               break;
-            } // case 16
+            } // case 18
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -487,34 +516,74 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private boolean autoPlay_ ;
+    private java.lang.Object mode_ = "";
     /**
-     * <code>bool auto_play = 2;</code>
-     * @return The autoPlay.
+     * <code>string mode = 2;</code>
+     * @return The mode.
      */
-    @java.lang.Override
-    public boolean getAutoPlay() {
-      return autoPlay_;
+    public java.lang.String getMode() {
+      java.lang.Object ref = mode_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        mode_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>bool auto_play = 2;</code>
-     * @param value The autoPlay to set.
+     * <code>string mode = 2;</code>
+     * @return The bytes for mode.
+     */
+    public com.google.protobuf.ByteString
+        getModeBytes() {
+      java.lang.Object ref = mode_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        mode_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string mode = 2;</code>
+     * @param value The mode to set.
      * @return This builder for chaining.
      */
-    public Builder setAutoPlay(boolean value) {
-
-      autoPlay_ = value;
+    public Builder setMode(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      mode_ = value;
       bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
     /**
-     * <code>bool auto_play = 2;</code>
+     * <code>string mode = 2;</code>
      * @return This builder for chaining.
      */
-    public Builder clearAutoPlay() {
+    public Builder clearMode() {
+      mode_ = getDefaultInstance().getMode();
       bitField0_ = (bitField0_ & ~0x00000002);
-      autoPlay_ = false;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string mode = 2;</code>
+     * @param value The bytes for mode to set.
+     * @return This builder for chaining.
+     */
+    public Builder setModeBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      mode_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

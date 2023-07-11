@@ -20,8 +20,14 @@ public interface PlayerInfoOrBuilder extends
       getNameBytes();
 
   /**
-   * <code>bool auto_play = 2;</code>
-   * @return The autoPlay.
+   * <code>string mode = 2;</code>
+   * @return The mode.
    */
-  boolean getAutoPlay();
+  java.lang.String getMode();
+  /**
+   * <code>string mode = 2;</code>
+   * @return The bytes for mode.
+   */
+  com.google.protobuf.ByteString
+      getModeBytes();
 }

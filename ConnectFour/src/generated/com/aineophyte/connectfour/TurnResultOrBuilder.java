@@ -17,4 +17,15 @@ public interface TurnResultOrBuilder extends
    * @return The status.
    */
   com.aineophyte.connectfour.TurnStatus getStatus();
+
+  /**
+   * <code>optional int32 move_number = 2;</code>
+   * @return Whether the moveNumber field is set.
+   */
+  boolean hasMoveNumber();
+  /**
+   * <code>optional int32 move_number = 2;</code>
+   * @return The moveNumber.
+   */
+  int getMoveNumber();
 }

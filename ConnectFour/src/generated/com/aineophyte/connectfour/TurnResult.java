@@ -39,6 +39,7 @@ private static final long serialVersionUID = 0L;
             com.aineophyte.connectfour.TurnResult.class, com.aineophyte.connectfour.TurnResult.Builder.class);
   }
 
+  private int bitField0_;
   public static final int STATUS_FIELD_NUMBER = 1;
   private int status_ = 0;
   /**
@@ -55,6 +56,25 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override public com.aineophyte.connectfour.TurnStatus getStatus() {
     com.aineophyte.connectfour.TurnStatus result = com.aineophyte.connectfour.TurnStatus.forNumber(status_);
     return result == null ? com.aineophyte.connectfour.TurnStatus.UNRECOGNIZED : result;
+  }
+
+  public static final int MOVE_NUMBER_FIELD_NUMBER = 2;
+  private int moveNumber_ = 0;
+  /**
+   * <code>optional int32 move_number = 2;</code>
+   * @return Whether the moveNumber field is set.
+   */
+  @java.lang.Override
+  public boolean hasMoveNumber() {
+    return ((bitField0_ & 0x00000001) != 0);
+  }
+  /**
+   * <code>optional int32 move_number = 2;</code>
+   * @return The moveNumber.
+   */
+  @java.lang.Override
+  public int getMoveNumber() {
+    return moveNumber_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -74,6 +94,9 @@ private static final long serialVersionUID = 0L;
     if (status_ != com.aineophyte.connectfour.TurnStatus.VALID.getNumber()) {
       output.writeEnum(1, status_);
     }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      output.writeInt32(2, moveNumber_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -86,6 +109,10 @@ private static final long serialVersionUID = 0L;
     if (status_ != com.aineophyte.connectfour.TurnStatus.VALID.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(1, status_);
+    }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, moveNumber_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -103,6 +130,11 @@ private static final long serialVersionUID = 0L;
     com.aineophyte.connectfour.TurnResult other = (com.aineophyte.connectfour.TurnResult) obj;
 
     if (status_ != other.status_) return false;
+    if (hasMoveNumber() != other.hasMoveNumber()) return false;
+    if (hasMoveNumber()) {
+      if (getMoveNumber()
+          != other.getMoveNumber()) return false;
+    }
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -116,6 +148,10 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + STATUS_FIELD_NUMBER;
     hash = (53 * hash) + status_;
+    if (hasMoveNumber()) {
+      hash = (37 * hash) + MOVE_NUMBER_FIELD_NUMBER;
+      hash = (53 * hash) + getMoveNumber();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -248,6 +284,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       bitField0_ = 0;
       status_ = 0;
+      moveNumber_ = 0;
       return this;
     }
 
@@ -284,6 +321,12 @@ private static final long serialVersionUID = 0L;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.status_ = status_;
       }
+      int to_bitField0_ = 0;
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.moveNumber_ = moveNumber_;
+        to_bitField0_ |= 0x00000001;
+      }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -300,6 +343,9 @@ private static final long serialVersionUID = 0L;
       if (other == com.aineophyte.connectfour.TurnResult.getDefaultInstance()) return this;
       if (other.status_ != 0) {
         setStatusValue(other.getStatusValue());
+      }
+      if (other.hasMoveNumber()) {
+        setMoveNumber(other.getMoveNumber());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -332,6 +378,11 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000001;
               break;
             } // case 8
+            case 16: {
+              moveNumber_ = input.readInt32();
+              bitField0_ |= 0x00000002;
+              break;
+            } // case 16
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -398,6 +449,46 @@ private static final long serialVersionUID = 0L;
     public Builder clearStatus() {
       bitField0_ = (bitField0_ & ~0x00000001);
       status_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int moveNumber_ ;
+    /**
+     * <code>optional int32 move_number = 2;</code>
+     * @return Whether the moveNumber field is set.
+     */
+    @java.lang.Override
+    public boolean hasMoveNumber() {
+      return ((bitField0_ & 0x00000002) != 0);
+    }
+    /**
+     * <code>optional int32 move_number = 2;</code>
+     * @return The moveNumber.
+     */
+    @java.lang.Override
+    public int getMoveNumber() {
+      return moveNumber_;
+    }
+    /**
+     * <code>optional int32 move_number = 2;</code>
+     * @param value The moveNumber to set.
+     * @return This builder for chaining.
+     */
+    public Builder setMoveNumber(int value) {
+
+      moveNumber_ = value;
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional int32 move_number = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearMoveNumber() {
+      bitField0_ = (bitField0_ & ~0x00000002);
+      moveNumber_ = 0;
       onChanged();
       return this;
     }
