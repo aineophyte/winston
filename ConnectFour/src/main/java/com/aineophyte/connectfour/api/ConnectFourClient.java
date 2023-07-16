@@ -11,7 +11,7 @@ import com.aineophyte.connectfour.TurnResult;
 
 import io.grpc.Channel;
 
-public class ConnectFourClient
+public class ConnectFourClient implements ConnectFour
 {
 	  private final ConnectFourBlockingStub blockingStub;
 	  private final ConnectFourStub asyncStub;
