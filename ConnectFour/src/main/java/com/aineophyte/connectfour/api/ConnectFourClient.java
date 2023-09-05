@@ -10,6 +10,7 @@ import com.aineophyte.connectfour.TurnInfo;
 import com.aineophyte.connectfour.TurnResult;
 
 import io.grpc.Channel;
+import io.grpc.stub.StreamObserver;
 
 public class ConnectFourClient implements ConnectFour
 {
@@ -36,6 +37,11 @@ public class ConnectFourClient implements ConnectFour
 	  public TurnResult executeTurn(TurnInfo request)
 	  {
 		  return blockingStub.executeTurn(request);
+	  }
+	  
+	  public void executeTurnAsync(TurnInfo request, StreamObserver<TurnResult> callback)
+	  {
+		  asyncStub.executeTurn(request, callback);
 	  }
 	  
 	  public DeleteResult deleteGame(GameInfo request)

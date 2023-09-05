@@ -2,47 +2,15 @@ package com.aineophyte.connectfour.logic.autoplay;
 
 import com.aineophyte.connectfour.GameBoard;
 import com.aineophyte.connectfour.GameSlot;
-import com.aineophyte.connectfour.TurnStatus;
-import com.aineophyte.connectfour.api.ConnectFourPlayStrategy;
-import com.aineophyte.connectfour.logic.MoveEvaluator;
-import com.aineophyte.connectfour.logic.MoveResult;
 
-public class FavorMiddlePlayStrategy implements ConnectFourPlayStrategy
+public class FavorMiddlePlayStrategy extends BasePlayStrategy
 {
-	private boolean player2;
 	private Boolean[][] boardGrid;
 	
 	@Override
-	public int getSlot(GameBoard board)
+	int getCalculatedSlot(Boolean[][] boardGrid)
 	{
-		int moveCount = board.getSlotsCount();
-		player2 = ((moveCount % 2) == 1);
-		
-		MoveEvaluator evaluator = new MoveEvaluator(board, 0, player2);
-		if (moveCount >= 5) {
-			// see if the there is a winning move
-			for (int x = 1; x <= 7; x++) {
-				evaluator.setXCoord(x);
-				
-				MoveResult result = evaluator.evaluate();
-				if (result.getStatus() == TurnStatus.WINNER) {
-					return x;
-				}
-			}
-			// see if the other player has a winning move
-			// on its next turn, in which case block it.
-			evaluator.setPlayer2(!player2);
-			for (int x = 1; x <= 7; x++) {				
-				evaluator.setXCoord(x);
-				
-				MoveResult result = evaluator.evaluate();
-				if (result.getStatus() == TurnStatus.WINNER) {
-					return x;
-				}
-			}
-		}
-		
-        boardGrid = evaluator.getBoardGrid();
+        this.boardGrid = boardGrid;
 		
 		// Take the middle if a column run of 4 is still possible,
         // otherwise work out from the middle, making the same
@@ -139,7 +107,7 @@ public class FavorMiddlePlayStrategy implements ConnectFourPlayStrategy
 		return false;
 	}
 	
-	private int getNextChoice(int xCoord) {
+	static int getNextChoice(int xCoord) {
 		switch (xCoord) {
 		    case 4:
 		    	return 3;

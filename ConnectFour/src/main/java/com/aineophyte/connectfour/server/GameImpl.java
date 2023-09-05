@@ -87,7 +87,7 @@ class GameImpl implements ConnectFour {
 	    	
 	    	int xCoord = (playerStrategy == null) ? request.getXCoord() : playerStrategy.getSlot(board);
 	    					    	
-	    	MoveEvaluator evaluator = new MoveEvaluator(board, xCoord, request.getPlayer2());
+	    	MoveEvaluator evaluator = new MoveEvaluator(board, xCoord, request.getPlayer2()).withLoggingEnabled(true);
 	    	status = evaluator.preCheck();
 	    	
 	    	if (status == TurnStatus.UNRECOGNIZED) {					
