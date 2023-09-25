@@ -2,45 +2,66 @@ package com.aineophyte.connectfour.logic.autoplay;
 
 import com.aineophyte.connectfour.GameBoard;
 import com.aineophyte.connectfour.GameSlot;
+import com.aineophyte.connectfour.api.ConnectFourSlotInfo;
 
+/**
+ * This is just a simplistic auto play mode where it take
+ * the middle vertical slot if its still possible to win
+ * vertically in that slot; otherwise it tries one column from
+ * the middle and continues to move away from the middle.  Once
+ * vertical wins are not possible, the move will just rotate away
+ * from the middle and then go back to the middle based on the player's
+ * previous move.
+ * 
+ * @author krasr
+ */
 public class FavorMiddlePlayStrategy extends BasePlayStrategy
 {
 	private Boolean[][] boardGrid;
 	
 	@Override
-	int getCalculatedSlot(Boolean[][] boardGrid)
+	ConnectFourSlotInfo getCalculatedSlot(Boolean[][] boardGrid)
 	{
         this.boardGrid = boardGrid;
+        
+        ConnectFourSlotInfo slotInfo = new ConnectFourSlotInfo();
 		
 		// Take the middle if a column run of 4 is still possible,
         // otherwise work out from the middle, making the same
         // check in each column.
         if (isPotentialWin(4)) {
-        	return 4;
+        	slotInfo.setSlot(4);
+        	return slotInfo;
         }
 
         if (isPotentialWin(3)) {
-        	return 3;
+        	slotInfo.setSlot(3);
+        	return slotInfo;
         }
         
         if (isPotentialWin(5)) {
-        	return 5;
+        	slotInfo.setSlot(5);
+        	return slotInfo;
         }
         
         if (isPotentialWin(2)) {
-        	return 2;
+        	slotInfo.setSlot(2);
+        	return slotInfo;
         }
         
         if (isPotentialWin(6)) {
-        	return 6;
+        	slotInfo.setSlot(6);
+        	return slotInfo;
         }
         
         if (isPotentialWin(1)) {
-        	return 1;
+        	slotInfo.setSlot(1);
+        	return slotInfo;
         }
         
         if (isPotentialWin(7)) {
-        	return 7;
+        	slotInfo.setSlot(7);
+        	return slotInfo;
         }
 		
 		// Work away and back to the middle based on the previous move
@@ -49,7 +70,8 @@ public class FavorMiddlePlayStrategy extends BasePlayStrategy
         
         for (int i = 1; i <= 7; i++) {
         	if (isSlotAvailable(nextChoice)) {
-        		return nextChoice;
+        		slotInfo.setSlot(nextChoice);
+        		return slotInfo;
         	}
         	
         	nextChoice = getNextChoice(nextChoice);

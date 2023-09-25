@@ -4,6 +4,7 @@ package com.aineophyte.connectfour.logic.autoplay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aineophyte.connectfour.api.ConnectFourSlotInfo;
 import com.aineophyte.connectfour.logic.BoardEvaluator;
 import com.aineophyte.connectfour.util.Tree;
 import com.aineophyte.connectfour.util.Tree.Node;
@@ -38,7 +39,7 @@ public class MiniMaxPlayStrategy extends BasePlayStrategy
 	}
 
 	@Override
-	int getCalculatedSlot(Boolean[][] boardGrid)
+	ConnectFourSlotInfo getCalculatedSlot(Boolean[][] boardGrid)
 	{
 		AlphaBetaNodeInfo info = new AlphaBetaNodeInfo(boardGrid, 0, true);
 		Tree<AlphaBetaNodeInfo> gameTree = new Tree<>(info);
@@ -55,7 +56,10 @@ public class MiniMaxPlayStrategy extends BasePlayStrategy
 	    	logger.debug(String.format("auto play move is slot %d from %d evaluations", autoMoveSlot, tracker.getEvalCount()));
 	    }
 	    
-		return autoMoveSlot;
+	    ConnectFourSlotInfo slotInfo = new ConnectFourSlotInfo();
+	    slotInfo.setSlot(autoMoveSlot);
+	    slotInfo.setEvaluations(tracker.getEvalCount());
+		return slotInfo;
 	}
 	
 	private AlphaBetaNodeInfo buildGameTree(Node<AlphaBetaNodeInfo> gameTreeNode, int level, boolean player2, int startSlot, Tracker tracker)
@@ -83,10 +87,6 @@ public class MiniMaxPlayStrategy extends BasePlayStrategy
 			if (slotRow > 0) {
 				Boolean[][] clone = BoardEvaluator.getClone(boardGrid);
 				clone[x-1][slotRow-1] = player2;
-				// TODO score the board, probably need to have the node data
-				// point to an object with the board grid, the score and the
-				// slot chosen and return that up the recursion chain instead
-				// of void.
 				AlphaBetaNodeInfo childInfo = new AlphaBetaNodeInfo(clone, x, opponent);
 				Node<AlphaBetaNodeInfo> childNode = gameTreeNode.addChild(childInfo);
 				
@@ -121,6 +121,13 @@ public class MiniMaxPlayStrategy extends BasePlayStrategy
 							// use a score of -1.
 							score = -1;
 						} else {
+							// TODO this is the static evaluation for the player's current
+							// move.  It probably needs its own method or class.  It is
+							// currently very simplistic and looks at how many of the 4
+							// directions the player can still get a run of 4 pieces from this
+							// board location.  It doesn't account for open spaces below
+							// where those runs occur for horizontal and the 2 diagonal
+							// directions.
 							int rowRun = evaluator.getRowRun();
 							int columnRun = evaluator.getColumnRun();
 							int diagonalUpRun = evaluator.getDiagonalRun(true);
@@ -206,17 +213,6 @@ public class MiniMaxPlayStrategy extends BasePlayStrategy
 			
 			x = favorMiddle ? FavorMiddlePlayStrategy.getNextChoice(x) : i + 1;
 		}
-		
-	    if (logger.isDebugEnabled()) {
-	    	if (levelNodeInfo != null) {
-	    		if (depth == level) {
-	    			//logger.debug("Using score: " + levelNodeInfo.score);
-	    		}
-		    	// logger.debug(String.format("returning score %d for level %d using slot %d", levelNodeInfo.score, level, levelNodeInfo.slot));	    		
-	    	} else {
-	    	    // logger.debug(String.format("returning null for level %d with start slot %d", level, startSlot));
-	    	}
-	    }
 	    
 		return levelNodeInfo;
 	}

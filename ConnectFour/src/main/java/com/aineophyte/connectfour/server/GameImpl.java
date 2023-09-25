@@ -15,6 +15,7 @@ import com.aineophyte.connectfour.TurnResult;
 import com.aineophyte.connectfour.TurnStatus;
 import com.aineophyte.connectfour.api.ConnectFour;
 import com.aineophyte.connectfour.api.ConnectFourPlayStrategy;
+import com.aineophyte.connectfour.api.ConnectFourSlotInfo;
 import com.aineophyte.connectfour.dao.DataAccessFactory;
 import com.aineophyte.connectfour.logic.MoveEvaluator;
 import com.aineophyte.connectfour.logic.MoveResult;
@@ -85,7 +86,17 @@ class GameImpl implements ConnectFour {
 	    	
 	    	ConnectFourPlayStrategy playerStrategy = PlayStrategyFactory.get(playerMode);
 	    	
-	    	int xCoord = (playerStrategy == null) ? request.getXCoord() : playerStrategy.getSlot(board);
+	    	int xCoord;
+	    	int evaluations;
+	    	
+	    	if (playerStrategy == null) {
+	    		xCoord = request.getXCoord();
+	    		evaluations = 0;
+	    	} else {
+	    		ConnectFourSlotInfo slotInfo = playerStrategy.getSlot(board);
+	    		xCoord = slotInfo.getSlot();
+	    		evaluations = slotInfo.getEvaluations();
+	    	}
 	    					    	
 	    	MoveEvaluator evaluator = new MoveEvaluator(board, xCoord, request.getPlayer2()).withLoggingEnabled(true);
 	    	status = evaluator.preCheck();
@@ -96,7 +107,8 @@ class GameImpl implements ConnectFour {
 				if ((status == TurnStatus.VALID) || (status == TurnStatus.WINNER) || (status == TurnStatus.DRAW)) {
 					GameSlot slot = result.getSlot();
 					DataAccessFactory.getDataAccess().insertGamePiece(gameId, slot);
-					return TurnResult.newBuilder().setStatus(status).setMoveNumber(slot.getPiece().getMoveNumber()).build();
+					return TurnResult.newBuilder().setStatus(status).setMoveNumber(slot.getPiece().getMoveNumber()).
+							setEvaluations(evaluations).build();
 				}		    		
 	    	}
 			

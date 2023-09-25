@@ -28,4 +28,15 @@ public interface TurnResultOrBuilder extends
    * @return The moveNumber.
    */
   int getMoveNumber();
+
+  /**
+   * <code>optional int32 evaluations = 3;</code>
+   * @return Whether the evaluations field is set.
+   */
+  boolean hasEvaluations();
+  /**
+   * <code>optional int32 evaluations = 3;</code>
+   * @return The evaluations.
+   */
+  int getEvaluations();
 }

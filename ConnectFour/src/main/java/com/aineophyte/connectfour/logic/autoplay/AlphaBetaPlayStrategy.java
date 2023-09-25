@@ -1,6 +1,17 @@
 
 package com.aineophyte.connectfour.logic.autoplay;
 
+/**
+ * Not implemented yet.  It will currently just do the same
+ * thing as MiniMax.
+ * 
+ * Needs to do Alpha/Beta pruning as each node is processed up
+ * from the bottom to eliminate unneeded static evaluations and
+ * board expansions.
+ * 
+ * @author krasr
+ *
+ */
 public class AlphaBetaPlayStrategy extends MiniMaxPlayStrategy
 {
 	AlphaBetaPlayStrategy withFavorMiddle(boolean favorMiddle)

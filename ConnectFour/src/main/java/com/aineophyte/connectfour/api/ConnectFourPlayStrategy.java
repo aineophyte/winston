@@ -4,5 +4,5 @@ import com.aineophyte.connectfour.GameBoard;
 
 public interface ConnectFourPlayStrategy
 {
-	int getSlot(GameBoard board);
+	ConnectFourSlotInfo getSlot(GameBoard board);
 }

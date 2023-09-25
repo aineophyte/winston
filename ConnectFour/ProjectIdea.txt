@@ -2,7 +2,7 @@ Project Idea
 
 Connect Four AI game that uses Mini/Max Alpha Beta.
 
-Some for the idea goes to MIT professor and AI pioneer Patrick Winston.  One of the lab assignments from MIT Open Courseware's
+Some of the idea goes to MIT professor and AI pioneer Patrick Winston.  One of the lab assignments from MIT Open Courseware's
 6.034 Artificial Intelligence class offered in the fall of 2010, https://ocw.mit.edu/courses/6-034-artificial-intelligence-fall-2010,
 was 'Game Search'.  It was some working python code that allowed a user to play Connect Four against the program that used mini/max depth
 first search to a depth of 4.  The assignment was to implememt a better static evaluation function than the supplied default one to score

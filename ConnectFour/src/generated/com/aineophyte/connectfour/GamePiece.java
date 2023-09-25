@@ -38,6 +38,7 @@ private static final long serialVersionUID = 0L;
             com.aineophyte.connectfour.GamePiece.class, com.aineophyte.connectfour.GamePiece.Builder.class);
   }
 
+  private int bitField0_;
   public static final int PLAYER2_FIELD_NUMBER = 1;
   private boolean player2_ = false;
   /**
@@ -60,6 +61,25 @@ private static final long serialVersionUID = 0L;
     return moveNumber_;
   }
 
+  public static final int EVALUATIONS_FIELD_NUMBER = 3;
+  private int evaluations_ = 0;
+  /**
+   * <code>optional int32 evaluations = 3;</code>
+   * @return Whether the evaluations field is set.
+   */
+  @java.lang.Override
+  public boolean hasEvaluations() {
+    return ((bitField0_ & 0x00000001) != 0);
+  }
+  /**
+   * <code>optional int32 evaluations = 3;</code>
+   * @return The evaluations.
+   */
+  @java.lang.Override
+  public int getEvaluations() {
+    return evaluations_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -80,6 +100,9 @@ private static final long serialVersionUID = 0L;
     if (moveNumber_ != 0) {
       output.writeInt32(2, moveNumber_);
     }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      output.writeInt32(3, evaluations_);
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -96,6 +119,10 @@ private static final long serialVersionUID = 0L;
     if (moveNumber_ != 0) {
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(2, moveNumber_);
+    }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(3, evaluations_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -116,6 +143,11 @@ private static final long serialVersionUID = 0L;
         != other.getPlayer2()) return false;
     if (getMoveNumber()
         != other.getMoveNumber()) return false;
+    if (hasEvaluations() != other.hasEvaluations()) return false;
+    if (hasEvaluations()) {
+      if (getEvaluations()
+          != other.getEvaluations()) return false;
+    }
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -132,6 +164,10 @@ private static final long serialVersionUID = 0L;
         getPlayer2());
     hash = (37 * hash) + MOVE_NUMBER_FIELD_NUMBER;
     hash = (53 * hash) + getMoveNumber();
+    if (hasEvaluations()) {
+      hash = (37 * hash) + EVALUATIONS_FIELD_NUMBER;
+      hash = (53 * hash) + getEvaluations();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -265,6 +301,7 @@ private static final long serialVersionUID = 0L;
       bitField0_ = 0;
       player2_ = false;
       moveNumber_ = 0;
+      evaluations_ = 0;
       return this;
     }
 
@@ -304,6 +341,12 @@ private static final long serialVersionUID = 0L;
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.moveNumber_ = moveNumber_;
       }
+      int to_bitField0_ = 0;
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.evaluations_ = evaluations_;
+        to_bitField0_ |= 0x00000001;
+      }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -323,6 +366,9 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getMoveNumber() != 0) {
         setMoveNumber(other.getMoveNumber());
+      }
+      if (other.hasEvaluations()) {
+        setEvaluations(other.getEvaluations());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -360,6 +406,11 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000002;
               break;
             } // case 16
+            case 24: {
+              evaluations_ = input.readInt32();
+              bitField0_ |= 0x00000004;
+              break;
+            } // case 24
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -437,6 +488,46 @@ private static final long serialVersionUID = 0L;
     public Builder clearMoveNumber() {
       bitField0_ = (bitField0_ & ~0x00000002);
       moveNumber_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int evaluations_ ;
+    /**
+     * <code>optional int32 evaluations = 3;</code>
+     * @return Whether the evaluations field is set.
+     */
+    @java.lang.Override
+    public boolean hasEvaluations() {
+      return ((bitField0_ & 0x00000004) != 0);
+    }
+    /**
+     * <code>optional int32 evaluations = 3;</code>
+     * @return The evaluations.
+     */
+    @java.lang.Override
+    public int getEvaluations() {
+      return evaluations_;
+    }
+    /**
+     * <code>optional int32 evaluations = 3;</code>
+     * @param value The evaluations to set.
+     * @return This builder for chaining.
+     */
+    public Builder setEvaluations(int value) {
+
+      evaluations_ = value;
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional int32 evaluations = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearEvaluations() {
+      bitField0_ = (bitField0_ & ~0x00000004);
+      evaluations_ = 0;
       onChanged();
       return this;
     }

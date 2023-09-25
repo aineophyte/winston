@@ -65,6 +65,7 @@ message GameSlot {
 message GamePiece {
   bool player2 = 1;
   int32 move_number = 2;
+  optional int32 evaluations = 3;
 } 
  
 message TurnInfo {
@@ -76,6 +77,7 @@ message TurnInfo {
 message TurnResult {
   TurnStatus status = 1;
   optional int32 move_number = 2;
+  optional int32 evaluations = 3;
 }
 
 message DeleteResult {

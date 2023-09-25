@@ -421,7 +421,7 @@ public class GameImplTest
 		TurnInfo turn8 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result8 = client.executeTurn(turn8);
 		assertEquals(TurnStatus.VALID, result8.getStatus(), "Unexpected turn result");
-		
+
 		TurnInfo turn9 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(4).setPlayer2(false).build();
 		TurnResult result9 = client.executeTurn(turn9);
 		assertEquals(TurnStatus.VALID, result9.getStatus(), "Unexpected turn result");
@@ -469,100 +469,30 @@ public class GameImplTest
 		TurnInfo turn20 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result20 = client.executeTurn(turn20);
 		assertEquals(TurnStatus.WINNER, result20.getStatus(), "Unexpected turn result");
-		
+
 		GameBoard board = client.getBoard(response);
 		System.out.println(board);
 	}
-		
-	@Test
-	public void testPlayerTwoAlphaBeta()
-	{
-		PlayerInfo player1 = PlayerInfo.newBuilder().setName("Scott").build();
-		PlayerInfo player2 = PlayerInfo.newBuilder().setName("Ultron").setMode("ALPHA_BETA").build();
-		GameInfo gameInfo = GameInfo.newBuilder().setPlayer1(player1).setPlayer2(player2).build();
-		GameInfo response = startGame(gameInfo);	
-		  
-		TurnInfo turn1 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(2).setPlayer2(false).build();
-		TurnResult result1 = client.executeTurn(turn1);
-		assertEquals(TurnStatus.VALID, result1.getStatus(), "Unexpected turn result");
-
-		TurnInfo turn2 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
-		TurnResult result2 = client.executeTurn(turn2);
-		assertEquals(TurnStatus.VALID, result2.getStatus(), "Unexpected turn result");
-
-		TurnInfo turn3 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(2).setPlayer2(false).build();
-		TurnResult result3 = client.executeTurn(turn3);
-		assertEquals(TurnStatus.VALID, result3.getStatus(), "Unexpected turn result");
-
-		TurnInfo turn4 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
-		TurnResult result4 = client.executeTurn(turn4);
-		assertEquals(TurnStatus.VALID, result4.getStatus(), "Unexpected turn result");
-
-		TurnInfo turn5 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(2).setPlayer2(false).build();
-		TurnResult result5 = client.executeTurn(turn5);
-		assertEquals(TurnStatus.VALID, result5.getStatus(), "Unexpected turn result");
-
-		TurnInfo turn6 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
-		TurnResult result6 = client.executeTurn(turn6);
-		assertEquals(TurnStatus.VALID, result6.getStatus(), "Unexpected turn result");
-
-		TurnInfo turn7 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(3).setPlayer2(false).build();
-		TurnResult result7 = client.executeTurn(turn7);
-		assertEquals(TurnStatus.VALID, result7.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn8 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
-		TurnResult result8 = client.executeTurn(turn8);
-		assertEquals(TurnStatus.VALID, result8.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn9 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(4).setPlayer2(false).build();
-		TurnResult result9 = client.executeTurn(turn9);
-		assertEquals(TurnStatus.VALID, result9.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn10 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
-		TurnResult result10 = client.executeTurn(turn10);
-		assertEquals(TurnStatus.VALID, result10.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn11 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(5).setPlayer2(false).build();
-		TurnResult result11 = client.executeTurn(turn11);
-		assertEquals(TurnStatus.VALID, result11.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn12 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
-		TurnResult result12 = client.executeTurn(turn12);
-		assertEquals(TurnStatus.VALID, result12.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn13 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(5).setPlayer2(false).build();
-		TurnResult result13 = client.executeTurn(turn13);
-		assertEquals(TurnStatus.VALID, result13.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn14 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
-		TurnResult result14 = client.executeTurn(turn14);
-		assertEquals(TurnStatus.VALID, result14.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn15 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(3).setPlayer2(false).build();
-		TurnResult result15 = client.executeTurn(turn15);
-		assertEquals(TurnStatus.VALID, result15.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn16 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
-		TurnResult result16 = client.executeTurn(turn16);
-		assertEquals(TurnStatus.VALID, result16.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn17 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(6).setPlayer2(false).build();
-		TurnResult result17 = client.executeTurn(turn17);
-		assertEquals(TurnStatus.VALID, result17.getStatus(), "Unexpected turn result");
-		
-		TurnInfo turn18 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
-		TurnResult result18 = client.executeTurn(turn18);
-		assertEquals(TurnStatus.WINNER, result18.getStatus(), "Unexpected turn result");
-		
-		GameBoard board = client.getBoard(response);
-		System.out.println(board);
-	}
-
+			
 	@Test
 	public void testPlayerTwoMiniMaxFavorMiddle()
 	{
+		testPlayerTwoMiniMaxFavorMiddleBase("MINI_MAX_FAVOR_MIDDLE");
+	}
+	
+	@Test
+	public void testPlayerTwoAlphaBetaFavorMiddle()
+	{
+		// This test should yield same results as
+		// MINI_MAX_FAVOR_MIDDLE even after we implement the
+		// Alpha/Beta pruning but with fewer evaluations.
+		testPlayerTwoMiniMaxFavorMiddleBase("ALPHA_BETA_FAVOR_MIDDLE");
+	}
+
+	private void testPlayerTwoMiniMaxFavorMiddleBase(String mode)
+	{
 		PlayerInfo player1 = PlayerInfo.newBuilder().setName("Scott").build();
-		PlayerInfo player2 = PlayerInfo.newBuilder().setName("Atom").setMode("MINI_MAX_FAVOR_MIDDLE").build();
+		PlayerInfo player2 = PlayerInfo.newBuilder().setName("Atom").setMode(mode).build();
 		GameInfo gameInfo = GameInfo.newBuilder().setPlayer1(player1).setPlayer2(player2).build();
 		GameInfo response = startGame(gameInfo);	
 		  
@@ -638,14 +568,32 @@ public class GameImplTest
 		System.out.println(board);
 	}
 	
+	
+	
 	@Test
 	public void testPlayerTwoMiniMax()
 	{
+		testPlayerTwoMiniMaxBase("MINI_MAX");
+	}
+	
+	@Test
+	public void testPlayerTwoAlphaBeta()
+	{
+		// This test should yield same results as
+		// MINI_MAX even after we implement the
+		// Alpha/Beta pruning but with fewer evaluations
+		testPlayerTwoMiniMaxBase("ALPHA_BETA");
+	}
+	
+	private void testPlayerTwoMiniMaxBase(String mode)
+	{
 		PlayerInfo player1 = PlayerInfo.newBuilder().setName("Scott").build();
-		PlayerInfo player2 = PlayerInfo.newBuilder().setName("Atom").setMode("MINI_MAX").build();
+		PlayerInfo player2 = PlayerInfo.newBuilder().setName("Atom").setMode(mode).build();
 		GameInfo gameInfo = GameInfo.newBuilder().setPlayer1(player1).setPlayer2(player2).build();
 		GameInfo response = startGame(gameInfo);	
-		  
+		
+		int player2Evals = 0;
+		
 		TurnInfo turn1 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(2).setPlayer2(false).build();
 		TurnResult result1 = client.executeTurn(turn1);
 		assertEquals(TurnStatus.VALID, result1.getStatus(), "Unexpected turn result");
@@ -653,6 +601,7 @@ public class GameImplTest
 		TurnInfo turn2 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result2 = client.executeTurn(turn2);
 		assertEquals(TurnStatus.VALID, result2.getStatus(), "Unexpected turn result");
+		player2Evals += result2.getEvaluations();
 
 		TurnInfo turn3 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(2).setPlayer2(false).build();
 		TurnResult result3 = client.executeTurn(turn3);
@@ -661,7 +610,8 @@ public class GameImplTest
 		TurnInfo turn4 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result4 = client.executeTurn(turn4);
 		assertEquals(TurnStatus.VALID, result4.getStatus(), "Unexpected turn result");
-
+		player2Evals += result4.getEvaluations();
+		
 		TurnInfo turn5 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(2).setPlayer2(false).build();
 		TurnResult result5 = client.executeTurn(turn5);
 		assertEquals(TurnStatus.VALID, result5.getStatus(), "Unexpected turn result");
@@ -669,6 +619,7 @@ public class GameImplTest
 		TurnInfo turn6 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result6 = client.executeTurn(turn6);
 		assertEquals(TurnStatus.VALID, result6.getStatus(), "Unexpected turn result");
+		player2Evals += result6.getEvaluations();
 
 		TurnInfo turn7 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(3).setPlayer2(false).build();
 		TurnResult result7 = client.executeTurn(turn7);
@@ -677,6 +628,7 @@ public class GameImplTest
 		TurnInfo turn8 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result8 = client.executeTurn(turn8);
 		assertEquals(TurnStatus.VALID, result8.getStatus(), "Unexpected turn result");
+		player2Evals += result8.getEvaluations();
 		
 		TurnInfo turn9 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(4).setPlayer2(false).build();
 		TurnResult result9 = client.executeTurn(turn9);
@@ -685,6 +637,7 @@ public class GameImplTest
 		TurnInfo turn10 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result10 = client.executeTurn(turn10);
 		assertEquals(TurnStatus.VALID, result10.getStatus(), "Unexpected turn result");
+		player2Evals += result10.getEvaluations();
 		
 		TurnInfo turn11 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(5).setPlayer2(false).build();
 		TurnResult result11 = client.executeTurn(turn11);
@@ -693,6 +646,7 @@ public class GameImplTest
 		TurnInfo turn12 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result12 = client.executeTurn(turn12);
 		assertEquals(TurnStatus.VALID, result12.getStatus(), "Unexpected turn result");
+		player2Evals += result12.getEvaluations();
 		
 		TurnInfo turn13 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(1).setPlayer2(false).build();
 		TurnResult result13 = client.executeTurn(turn13);
@@ -701,6 +655,7 @@ public class GameImplTest
 		TurnInfo turn14 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result14 = client.executeTurn(turn14);
 		assertEquals(TurnStatus.VALID, result14.getStatus(), "Unexpected turn result");
+		player2Evals += result14.getEvaluations();
 
 		TurnInfo turn15 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(4).setPlayer2(false).build();
 		TurnResult result15 = client.executeTurn(turn15);
@@ -709,6 +664,7 @@ public class GameImplTest
 		TurnInfo turn16 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result16 = client.executeTurn(turn16);
 		assertEquals(TurnStatus.VALID, result16.getStatus(), "Unexpected turn result");
+		player2Evals += result16.getEvaluations();
 		
 		TurnInfo turn17 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(2).setPlayer2(false).build();
 		TurnResult result17 = client.executeTurn(turn17);
@@ -717,9 +673,11 @@ public class GameImplTest
 		TurnInfo turn18 = TurnInfo.newBuilder().setGameId(response.getGameId()).setXCoord(-1).setPlayer2(true).build();
 		TurnResult result18 = client.executeTurn(turn18);
 		assertEquals(TurnStatus.WINNER, result18.getStatus(), "Unexpected turn result");
+		player2Evals += result18.getEvaluations();
 
 		GameBoard board = client.getBoard(response);
 		System.out.println(board);
+		System.out.println("Player 2 evaluations = " + player2Evals);
 	}
 	
 	@Test

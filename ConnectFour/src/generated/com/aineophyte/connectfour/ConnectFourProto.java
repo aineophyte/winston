@@ -72,24 +72,26 @@ public final class ConnectFourProto {
       "PlayerInfoH\002\210\001\001B\n\n\010_game_idB\n\n\010_player1B" +
       "\n\n\010_player2\"b\n\010GameSlot\022\017\n\007x_coord\030\001 \001(\005" +
       "\022\017\n\007y_coord\030\002 \001(\005\022*\n\005piece\030\003 \001(\0132\026.conne" +
-      "ctfour.GamePieceH\000\210\001\001B\010\n\006_piece\"1\n\tGameP" +
+      "ctfour.GamePieceH\000\210\001\001B\010\n\006_piece\"[\n\tGameP" +
       "iece\022\017\n\007player2\030\001 \001(\010\022\023\n\013move_number\030\002 \001" +
-      "(\005\"=\n\010TurnInfo\022\017\n\007game_id\030\001 \001(\t\022\017\n\007x_coo" +
-      "rd\030\002 \001(\005\022\017\n\007player2\030\003 \001(\010\"_\n\nTurnResult\022" +
-      "\'\n\006status\030\001 \001(\0162\027.connectfour.TurnStatus" +
-      "\022\030\n\013move_number\030\002 \001(\005H\000\210\001\001B\016\n\014_move_numb" +
-      "er\"\037\n\014DeleteResult\022\017\n\007game_id\030\001 \001(\t*^\n\nT" +
-      "urnStatus\022\t\n\005VALID\020\000\022\013\n\007INVALID\020\001\022\021\n\rSLO" +
-      "T_OCCUPIED\020\002\022\017\n\013OUT_OF_TURN\020\003\022\n\n\006WINNER\020" +
-      "\004\022\010\n\004DRAW\020\0052\212\002\n\013ConnectFour\022;\n\tStartGame" +
-      "\022\025.connectfour.GameInfo\032\025.connectfour.Ga" +
-      "meInfo\"\000\022;\n\010GetBoard\022\025.connectfour.GameI" +
-      "nfo\032\026.connectfour.GameBoard\"\000\022?\n\013Execute" +
-      "Turn\022\025.connectfour.TurnInfo\032\027.connectfou" +
-      "r.TurnResult\"\000\022@\n\nDeleteGame\022\025.connectfo" +
-      "ur.GameInfo\032\031.connectfour.DeleteResult\"\000" +
-      "B5\n\032com.aineophyte.connectfourB\020ConnectF" +
-      "ourProtoP\001\242\002\002CFb\006proto3"
+      "(\005\022\030\n\013evaluations\030\003 \001(\005H\000\210\001\001B\016\n\014_evaluat" +
+      "ions\"=\n\010TurnInfo\022\017\n\007game_id\030\001 \001(\t\022\017\n\007x_c" +
+      "oord\030\002 \001(\005\022\017\n\007player2\030\003 \001(\010\"\211\001\n\nTurnResu" +
+      "lt\022\'\n\006status\030\001 \001(\0162\027.connectfour.TurnSta" +
+      "tus\022\030\n\013move_number\030\002 \001(\005H\000\210\001\001\022\030\n\013evaluat" +
+      "ions\030\003 \001(\005H\001\210\001\001B\016\n\014_move_numberB\016\n\014_eval" +
+      "uations\"\037\n\014DeleteResult\022\017\n\007game_id\030\001 \001(\t" +
+      "*^\n\nTurnStatus\022\t\n\005VALID\020\000\022\013\n\007INVALID\020\001\022\021" +
+      "\n\rSLOT_OCCUPIED\020\002\022\017\n\013OUT_OF_TURN\020\003\022\n\n\006WI" +
+      "NNER\020\004\022\010\n\004DRAW\020\0052\212\002\n\013ConnectFour\022;\n\tStar" +
+      "tGame\022\025.connectfour.GameInfo\032\025.connectfo" +
+      "ur.GameInfo\"\000\022;\n\010GetBoard\022\025.connectfour." +
+      "GameInfo\032\026.connectfour.GameBoard\"\000\022?\n\013Ex" +
+      "ecuteTurn\022\025.connectfour.TurnInfo\032\027.conne" +
+      "ctfour.TurnResult\"\000\022@\n\nDeleteGame\022\025.conn" +
+      "ectfour.GameInfo\032\031.connectfour.DeleteRes" +
+      "ult\"\000B5\n\032com.aineophyte.connectfourB\020Con" +
+      "nectFourProtoP\001\242\002\002CFb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -124,7 +126,7 @@ public final class ConnectFourProto {
     internal_static_connectfour_GamePiece_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_connectfour_GamePiece_descriptor,
-        new java.lang.String[] { "Player2", "MoveNumber", });
+        new java.lang.String[] { "Player2", "MoveNumber", "Evaluations", "Evaluations", });
     internal_static_connectfour_TurnInfo_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_connectfour_TurnInfo_fieldAccessorTable = new
@@ -136,7 +138,7 @@ public final class ConnectFourProto {
     internal_static_connectfour_TurnResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_connectfour_TurnResult_descriptor,
-        new java.lang.String[] { "Status", "MoveNumber", "MoveNumber", });
+        new java.lang.String[] { "Status", "MoveNumber", "Evaluations", "MoveNumber", "Evaluations", });
     internal_static_connectfour_DeleteResult_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_connectfour_DeleteResult_fieldAccessorTable = new
