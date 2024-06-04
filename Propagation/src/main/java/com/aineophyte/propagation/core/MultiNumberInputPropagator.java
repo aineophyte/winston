@@ -1,5 +1,9 @@
 package com.aineophyte.propagation.core;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 /**
  * Base class to handle Number operations where the output cell is a function on a series
  * of input cells like a sum or product.
@@ -9,7 +13,9 @@ package com.aineophyte.propagation.core;
 abstract class MultiNumberInputPropagator extends BasePropagator<Number>
 {
 	Cell<Number> output;
-	Cell<Number>[] input;
+	
+	Collection<Cell<Number>> input;
+	private boolean modified;
 	
 	abstract Number operation(Number x, Number y);
 	
@@ -27,7 +33,8 @@ abstract class MultiNumberInputPropagator extends BasePropagator<Number>
     		throw new IllegalArgumentException(this.getClass().getName() + " requires at least one input cell.");
     	}
     	
-    	input = cells;
+    	input = Arrays.asList(cells);
+    	modified = false;
     	
     	// TODO should we do this or should we assume that there will be at least one
     	// input that isn't a constant and the output is only relevant if at least one
@@ -40,10 +47,14 @@ abstract class MultiNumberInputPropagator extends BasePropagator<Number>
 	{
 		Number result = null;
 		
-		// The result will be based on the input cells that are set.
+		// The result will be based on the input cells that are set unless
+		// requireAllInputs is true.
 		for (Cell<Number> c : input) {
 			Number content = c.getContent();
 			if (content == null) {
+				if (requireAllInputs) {
+					return;
+				}
 				continue;
 			}
 			
@@ -59,6 +70,16 @@ abstract class MultiNumberInputPropagator extends BasePropagator<Number>
 	
 	public int getInputCount()
 	{
-		return input.length;
+		return input.size();
+	}
+	
+	public void addInput(Cell<Number> newInput)
+	{
+		if (!modified) {
+			input = new ArrayList<>(input);
+		}
+		
+		newInput.addPropertyChangeListener(this);
+		input.add(newInput);
 	}
 }

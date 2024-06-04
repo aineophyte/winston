@@ -9,6 +9,14 @@ package com.aineophyte.propagation.core;
  */
 public abstract class BasePropagator<T> extends BaseTypedPropertyChangeListener<T>
 {
+	boolean requireAllInputs;
+	
+	public BasePropagator<T> withRequireAllInputs(boolean requireAllInputs)
+	{
+		this.requireAllInputs = requireAllInputs;
+		return this;
+	}
+	
     protected abstract void handleContentPropertyChange(TypedPropertyChangeEvent<T> evt);
     
 	@Override

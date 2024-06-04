@@ -30,7 +30,7 @@ public class QuotientPropagator extends BasePropagator<Number>
     	// property change event is handled?
 		// handleContentPropertyChange(null);
 	}
-
+	
 	@Override
 	protected void handleContentPropertyChange(TypedPropertyChangeEvent<Number> evt)
 	{
@@ -38,15 +38,23 @@ public class QuotientPropagator extends BasePropagator<Number>
 		
 		Number denominatorContent = denominator.getContent();
 		
-		// The result will be based on the input cells that are set.
+		// The result will be based on the input cells that are set unless
+		// requireAllInputs is true.
 		if (denominatorContent == null) {
-			result = numerator.getContent();
+			if (requireAllInputs) {
+				return;
+			}
+			
+			result = numerator.getContent();			
 		} else {
 		    Number numeratorContent = numerator.getContent();
 		    if (numeratorContent == null) {
-		    	// if only the denominator is set, return it's
-		    	// reciprocal
-		    	result = 1 / denominatorContent.doubleValue();
+		    	if (requireAllInputs) {
+		    		return;
+		    	}		    	
+	    	    // If only the denominator is set, return it's
+	    	    // reciprocal
+	    	    result = 1 / denominatorContent.doubleValue();
 		    } else {
 		    	result = numeratorContent.doubleValue() / denominatorContent.doubleValue();
 		    }

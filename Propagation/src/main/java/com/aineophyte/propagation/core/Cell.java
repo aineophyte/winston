@@ -9,7 +9,8 @@ import java.beans.PropertyChangeSupport;
  * guide by Radul.
  * 
  * This is bare bones at the moment with support for only setting and propagating content to experiment with some
- * simple math examples.  There has been no consideration for relations, neighbors, constraints and strongest.
+ * simple math examples.  There has been no consideration for relations, neighbors and strongest.  It does check
+ * for contradictions if enabled for the cell.
  * 
  * @author Scott Krasovec
  *
@@ -21,12 +22,15 @@ public class Cell<T>
 	
     protected T content;
     private String name;
+    private CellStates state;
+    private boolean checkContradiction;
     
     private PropertyChangeSupport support;
     
     public Cell()
     {
     	support = new PropertyChangeSupport(this);
+    	state = CellStates.NOTHING;
     }
     
     // Name is optional at the moment.  It will be part of the property name
@@ -34,6 +38,12 @@ public class Cell<T>
     public Cell<T> withName(String name)
     {
     	this.name = name;
+    	return this;
+    }
+    
+    public Cell<T> withCheckContradiction(boolean checkContradiction)
+    {
+    	this.checkContradiction = checkContradiction;
     	return this;
     }
     
@@ -50,7 +60,35 @@ public class Cell<T>
     public void setContent(T content)
     {
     	T oldValue = this.content;
-    	this.content = content;
+    	
+    	if (state.isNothing()) {
+    		this.content = content;
+    		state = CellStates.SET;
+    	} else if (state.isSet()) {
+        	if ((oldValue == null) && (content == null)) {
+        		return;
+        	}
+        	if (oldValue != null) {
+        		// Not crazy about this.  Might be better to create a NumberCell
+        		// class that extends Cell<Number> and make that the type used
+        		// by the numeric propagators.
+        		if ((oldValue instanceof Number) &&
+        				(content instanceof Number)) {
+        			if (((Number) oldValue).doubleValue() == ((Number) content).doubleValue()) {
+        				return;
+        			}
+        				
+        		} else if (oldValue.equals(content)) {
+        			return;
+        		}
+        	}
+        	this.content = merge(oldValue, content);
+    	}
+    	
+    	if (state.isContradiction()) {
+    		handleContradiction(oldValue, content);
+    	}
+
         support.firePropertyChange(new TypedPropertyChangeEvent<>(this, CONTENT_PROPERTY_NAME + "_" + name, oldValue, content));
     }
     
@@ -62,5 +100,40 @@ public class Cell<T>
     public void removePropertyChangeListener(PropertyChangeListener pcl)
     {
         support.removePropertyChangeListener(pcl);
+    }
+    
+    /**
+     * Override this method, if you want the cell implementation
+     * to deal with merging differing content values.  This is
+     * where you would deal with merging a range and keeping track
+     * of strongest.
+     * 
+     * @param previousValue
+     * @param newValue
+     * @return
+     */
+    protected T merge(T previousValue, T newValue)
+    {
+    	if (!checkContradiction) {
+    		return newValue;
+    	}
+    	
+    	state = CellStates.CONTRADICTION;
+    	return previousValue;
+    }
+    
+    /**
+     * When contradictions are enabled and merge() hasn't been
+     * overridden, this will throw a default exception when
+     * dealing with contradicting values.  Override if you want a
+     * different behavior.
+     * 
+     * @param oldValue
+     * @param newValue
+     */
+    protected void handleContradiction(T oldValue, T newValue)
+    {
+    	throw new CellContradictionException(String.format("Default handler detected contradiction oldValue: %s newValue: %s",
+    			oldValue, newValue));
     }
 }

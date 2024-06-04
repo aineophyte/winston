@@ -57,7 +57,7 @@ public class SquareRootPropagator extends BasePropagator<Number>
 	    	} else {
 	    		answer = 0;
 	    		
-	    		Cell<Number> x = new Cell<Number>().withName("x");
+	    		Cell<Number> x = new Cell<Number>().withName("x").withCheckContradiction(true);
 	    		Cell<Number> guess = new Cell<Number>().withName("guess");
 	    		Cell<Number> betterGuess = new Cell<Number>().withName("betterGuess");
 	    		new HeronStepPropagator(x, guess, betterGuess);
