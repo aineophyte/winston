@@ -18,4 +18,4 @@ to the Genesis System he helped conceive at the MIT AI Lab http://groups.csail.m
 http://groups.csail.mit.edu/mac/users/gjs/6.945/ refers to the textbook Software Design and Flexibility.  Chapter 7: Propagation of that textbook describes the architecture and gives
 examples written in the Scheme programming language.  This first iteration of my Java implementation introduces a bare bones cell that fires content change events and some core propagators
 that can be used for doing some basic math. I am speculating that I might be reinventing the wheel and that perhaps there is a java library already available that was written for the
-MIT Genesis System.
+MIT Genesis System.  When I go back to the ConnectFour project, coverting the game slots to cells with propagators that do the static evaluations might be a good option.
